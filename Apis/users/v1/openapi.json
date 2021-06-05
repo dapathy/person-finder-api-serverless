@@ -1,0 +1,27 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Users",
+        "description": "",
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "https://serendipity-api.azure-api.net/api/v1"
+        }
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Get users",
+                "operationId": "get-users",
+                "responses": {
+                    "200": {
+                        "description": null
+                    }
+                }
+            }
+        }
+    },
+    "components": {}
+}
