@@ -1,0 +1,30 @@
+<!--
+    IMPORTANT:
+    - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.
+    - Only the <forward-request> policy element can appear within the <backend> section element.
+    - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.
+    - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.
+    - To add a policy position the cursor at the desired insertion point and click on the round button associated with the policy.
+    - To remove a policy, delete the corresponding policy statement from the policy document.
+    - Policies are applied in the order of their appearance, from the top down.
+
+    TODO: parameterize these values
+-->
+<policies>
+    <inbound>
+        <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Unauthorized. Access token is missing or invalid.">
+            <openid-config url="https://serendipityapp.b2clogin.com/serendipityapp.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1_susi" />
+            <audiences>
+                <audience>aadf890a-55a5-430f-9254-4c6bb69000fd</audience>
+            </audiences>
+            <issuers>
+                <issuer>https://serendipityapp.b2clogin.com/e32da11f-cf8f-4877-9106-2d3ba00f974d/v2.0/</issuer>
+            </issuers>
+        </validate-jwt>
+    </inbound>
+    <backend>
+        <forward-request />
+    </backend>
+    <outbound />
+    <on-error />
+</policies>

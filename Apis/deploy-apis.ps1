@@ -32,6 +32,10 @@ if ($product) {
     New-AzApiManagementProduct @productArguments
 }
 
+# Global policy
+$policyPath = Join-Path "$(Get-Location)" "policy.xml"
+Set-AzApiManagementPolicy -Context $apiManagementContext -PolicyFilePath $policyPath
+
 # API version sets
 $versionSetDirectories = Get-ChildItem -Directory
 foreach ($versionSetDirectory in $versionSetDirectories) {
