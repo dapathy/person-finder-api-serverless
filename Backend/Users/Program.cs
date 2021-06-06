@@ -1,5 +1,3 @@
-using Microsoft.Azure.Functions.Worker.Configuration;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 
@@ -7,13 +5,13 @@ namespace Users
 {
 	public class Program
 	{
-		public static void Main()
+		public static async Task Main()
 		{
 			var host = new HostBuilder()
 				.ConfigureFunctionsWorkerDefaults()
 				.Build();
 
-			host.Run();
+			await host.RunAsync();
 		}
 	}
 }
