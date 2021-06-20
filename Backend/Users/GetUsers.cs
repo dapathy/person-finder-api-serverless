@@ -1,25 +1,23 @@
 using System;
-using System.Net;
 using System.Threading.Tasks;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Users
 {
     public static class GetUsers
     {
-	    [Function(nameof(GetUsers))]
-        public static async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "users")] HttpRequestData req,
-            FunctionContext executionContext)
+        [FunctionName(nameof(GetUsers))]
+        public static async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "users")] HttpRequest req,
+            ILogger log)
         {
-            var logger = executionContext.GetLogger(nameof(GetUsers));
-            logger.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            await response.WriteAsJsonAsync(Array.Empty<string>());
-
-            return response;
+            return new OkObjectResult(Array.Empty<string>());
         }
     }
 }
