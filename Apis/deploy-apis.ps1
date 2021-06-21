@@ -64,12 +64,17 @@ foreach ($versionSetDirectory in $versionSetDirectories) {
             ApiType = "Http"
             ApiVersionSetId = $versionSetName
             ApiVersion = $version
-            Path = "users"
+            Path = "api/$versionSetName"
             Protocol = "Https"
             SpecificationFormat = "OpenApiJson"
             SpecificationPath = $jsonPath
         }
         $api = Import-AzApiManagementApi @apiArguments
         Add-AzApiManagementApiToProduct -Context $apiManagementContext -ProductId $productName -ApiId $api.ApiId
+
+        $apiPolicyPath = Join-Path "$(Get-Location)" $versionSetName $version "policy.xml"
+        if (Test-Path $apiPolicyPath) {
+            Set-AzApiManagementPolicy -Context $apiManagementContext -ApiId $api.ApiId -PolicyFilePath $apiPolicyPath
+        }
     }
 }
